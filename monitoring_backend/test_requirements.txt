@@ -1,0 +1,6 @@
+requests
+asyncio
+pytest
+pytest-asyncio
+pytest-timeout
+mockito

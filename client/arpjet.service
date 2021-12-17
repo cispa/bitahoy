@@ -1,0 +1,15 @@
+[Unit]
+Description=arpjet
+After=network.target
+StartLimitBurst=5
+StartLimitIntervalSec=10
+[Service]
+Type=simple
+Restart=always
+RestartSec=1
+User=root
+WorkingDirectory=/arpjet/
+ExecStart=/usr/bin/env python3 /arpjet/arpjet.py
+
+[Install]
+WantedBy=multi-user.target

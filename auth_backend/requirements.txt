@@ -1,0 +1,5 @@
+requests
+bcrypt
+psycopg2
+cryptography
+bcrypt

@@ -1,0 +1,11 @@
+{
+    "name": "Adblocker Addon",
+    "maintainer": "Bitahoy",
+    "description": "Ablocker + DNS resolver for your home network",
+    "interceptors": {
+        "Adblocker": {
+            "description": "Intercepts dns requests, opens up a DNS resolver on port 53 UDP, and blocks ads",
+            "class": "adblocker.adblockerInterceptor"
+        }
+    }
+}

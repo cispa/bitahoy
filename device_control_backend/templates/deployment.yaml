@@ -1,0 +1,43 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    bitahoy.id: {{ .Release.Name }}-backend
+  name: {{ .Release.Name }}-backend
+spec:
+  replicas: 2
+  strategy:
+    type: RollingUpdate
+  selector:
+    matchLabels:
+      bitahoy.id: {{ .Release.Name }}-backend
+  template:
+    metadata:
+      labels:
+        bitahoy.id: {{ .Release.Name }}-backend
+    spec:
+      containers:
+      - env:
+        - name: MODULE_NAME
+          value: app
+        - name: ZMQ_HOST
+          value: {{ .Release.Name }}-zmq
+        - name: DB_HOST
+          value: {{ .Release.Name }}-db
+        - name: SLACK_BOT_TOKEN
+          value: {{ .Values.slack_bot_token }}
+        image: bitahoy/device-control-backend
+        imagePullPolicy: "Always"
+        name: {{ .Release.Name }}-backend
+        ports:
+        - containerPort: 80
+        resources: {}
+        securityContext: 
+          readOnlyRootFilesystem: true
+        volumeMounts: []
+      restartPolicy: Always
+      serviceAccountName: ""
+      volumes: []
+      imagePullSecrets:
+        - name: myregistrykey
+status: {}

@@ -1,0 +1,37 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    bitahoy.id: {{ .Release.Name }}-zmq
+  name: {{ .Release.Name }}-zmq
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      bitahoy.id: {{ .Release.Name }}-zmq
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        bitahoy.id: {{ .Release.Name }}-zmq
+    spec:
+      containers:
+      - env:
+        - name: MODULE_NAME
+          value: app
+        - name: WITH_CACHE
+          value: {{ .Values.cache }}
+        image: bitahoy/backend-zmq-server:{{ .Values.imagetag }}
+        imagePullPolicy: "Always"
+        name: {{ .Release.Name }}-zmq
+        ports:
+        - containerPort: 9000
+        resources: {}
+        volumeMounts: []
+      restartPolicy: Always
+      serviceAccountName: ""
+      volumes: []
+      imagePullSecrets:
+        - name: myregistrykey
+status: {}

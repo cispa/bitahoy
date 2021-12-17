@@ -1,0 +1,13 @@
+[Unit]
+Description=arpjet
+
+[Service]
+Type=simple
+Restart=always
+RestartSec=3
+User=root
+WorkingDirectory=/
+ExecStart=/usr/local/sbin/arpjet
+
+[Install]
+RequiredBy=multi-user.target

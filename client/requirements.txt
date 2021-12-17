@@ -1,0 +1,12 @@
+wheel
+requests
+setproctitle
+numpy
+scapy
+websockets
+aiohttp[speedups]
+
+# ML module
+cython
+scipy
+dill

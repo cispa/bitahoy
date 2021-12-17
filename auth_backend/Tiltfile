@@ -1,0 +1,7 @@
+# -*- mode: Python -*-
+
+docker_build('bitahoy/auth-backend', '.')
+k8s_yaml(helm('.', 'auth', 'auth')) 
+k8s_resource('auth-backend', port_forwards='9000')
+k8s_resource('authdb', port_forwards='9001')
+# test('py-tests', 'python3 -m pytest -s tests/', deps=['src/app.py'], resource_deps=['auth-backend', 'authdb'], ignore='src/*')

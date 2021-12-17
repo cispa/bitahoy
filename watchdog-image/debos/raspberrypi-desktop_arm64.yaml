@@ -1,0 +1,76 @@
+{{- $image := or .image "raspberrypi-desktop_buster_arm64.img" -}}
+
+architecture: arm64
+
+actions:
+  - action: debootstrap
+    suite: "buster"
+    components:
+      - main
+      - contrib
+      - non-free
+    mirror: https://deb.debian.org/debian
+
+  - action: apt
+    recommends: false
+    packages: [ sudo, openssh-server, adduser, systemd-sysv, iproute2, net-tools, isc-dhcp-client, nano, raspi3-firmware, plymouth-label, desktop-base, lxde, xserver-xorg, linux-image-arm64, firmware-brcm80211 ]
+
+  - action: run
+    chroot: true
+    script: scripts/setup-user.sh
+
+  - action: overlay
+    source: overlays/lxde-pi
+
+  - action: overlay
+    source: overlays/lightdm
+
+  - action: overlay
+    source: overlays/initramfs-tools
+
+  - action: run
+    chroot: true
+    command: update-initramfs -u
+
+  - action: run
+    chroot: true
+    command: echo raspberrypi > /etc/hostname; echo "127.0.0.1  raspberrypi" > /etc/hosts
+
+  - action: run
+    chroot: true
+    command: echo "console=tty0 root=LABEL=root rw elevator=deadline fsck.repair=yes net.ifnames=0 cma=64M rootwait quiet splash" > /boot/firmware/cmdline.txt
+
+  - action: run
+    chroot: true
+    command: apt clean; rm -rf /var/lib/apt/lists
+
+  - action: image-partition
+    imagename: {{ $image }}
+    imagesize: 8GB
+    partitiontype: msdos
+    mountpoints:
+      - mountpoint: /
+        partition: root
+      - mountpoint: /boot/firmware
+        partition: firmware
+        options: [ x-systemd.automount ]
+    partitions:
+      - name: firmware
+        fs: fat32
+        start: 0%
+        end: 256MB
+      - name: root
+        fs: ext4
+        start: 256MB
+        end: 100%
+
+  - action: filesystem-deploy
+    description: Deploying filesystem onto image
+
+  - action: run
+    postprocess: true
+    command: bmaptool create {{ $image }} > {{ $image }}.bmap
+
+  - action: run
+    postprocess: true
+    command: gzip -f {{ $image }}

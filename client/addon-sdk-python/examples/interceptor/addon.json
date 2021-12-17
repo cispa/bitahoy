@@ -1,0 +1,11 @@
+{
+    "name": "Example Interceptor",
+    "maintainer": "Bitahoy",
+    "description": "This is an example interceptor addon to demonstrate how an interceptor would look like",
+    "interceptors": {
+        "DNSpacketcounter": {
+            "description": "Example module to count dns requests and responses",
+            "class": "exampleinterceptor.dnsInterceptor"
+        }
+    }
+}

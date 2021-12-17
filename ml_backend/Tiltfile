@@ -1,0 +1,6 @@
+# -*- mode: Python -*-
+
+docker_build('bitahoy/ml-backend', '.')
+docker_build('bitahoy/backend-zmq-server', './dependencies/backend_zmq_server/.')
+k8s_yaml(helm('.', 'ml', 'ml')) 
+k8s_resource('ml-backend', port_forwards='9000')

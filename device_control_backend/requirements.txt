@@ -1,0 +1,6 @@
+requests
+psycopg2
+asyncio
+pyzmq
+slackclient
+pytest

@@ -1,0 +1,1 @@
+cat .git/modules/dependencies/backend_zmq_server/HEAD

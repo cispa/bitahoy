@@ -1,0 +1,8 @@
+# -*- mode: Python -*-
+
+docker_build('bitahoy/device-control-backend', '.')
+docker_build('bitahoy/backend-zmq-server', './dependencies/backend_zmq_server/.')
+k8s_yaml(helm('.', 'control', 'control')) 
+k8s_resource('control-backend', port_forwards='9000')
+k8s_resource('control-db', port_forwards='9001')
+test('py-tests', 'python3 -m pytest -s src/', deps=['src/app.py'], resource_deps=['control-backend', 'control-db'], ignore='src/*')

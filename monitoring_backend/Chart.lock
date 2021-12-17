@@ -1,0 +1,9 @@
+dependencies:
+- name: postgresql
+  repository: https://charts.bitnami.com/bitnami
+  version: 10.13.8
+- name: backend_zmq_server
+  repository: file://./dependencies/backend_zmq_server
+  version: "1.0"
+digest: sha256:2562a364d0eb35f75bd04ea706510db2b2dff3023d0a3465a284c6367f91b49e
+generated: "2021-11-16T17:51:05.4972404+01:00"

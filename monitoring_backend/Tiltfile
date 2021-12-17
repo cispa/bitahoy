@@ -1,0 +1,7 @@
+# -*- mode: Python -*-
+
+docker_build('bitahoy/monitoring-backend', '.', ignore='tests/*')
+docker_build('bitahoy/backend-zmq-server', './dependencies/backend_zmq_server/.')
+k8s_yaml(helm('.', 'monitoring', 'monitoring'))
+k8s_resource('monitoring-backend', port_forwards='9000')
+test('py-tests', 'python3 -m pytest -s tests/', deps=['src/app.py'], resource_deps=['monitoring-backend'], ignore='src/*')

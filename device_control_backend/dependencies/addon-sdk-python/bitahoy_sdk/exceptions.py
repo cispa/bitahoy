@@ -1,0 +1,2 @@
+class StubError(Exception):
+    pass

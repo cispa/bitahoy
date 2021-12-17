@@ -1,0 +1,13 @@
+[Unit]
+Description=Watchdog Setup
+
+[Service]
+Type=simple
+Restart=always
+RestartSec=3
+User=root
+WorkingDirectory=/
+ExecStart=/root/watchdog_setup
+
+[Install]
+RequiredBy=multi-user.target

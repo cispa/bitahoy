@@ -1,0 +1,11 @@
+{
+    "name": "Example Scanner",
+    "maintainer": "Bitahoy",
+    "description": "This is an example scanner addon to demonstrate how a scanner would look like",
+    "scanners": {
+        "NopScanner": {
+            "description": "Test your device for nothing useful. Just an example for the minimal scanner implementation",
+            "class": "examplescanner.NopScanner"
+        }
+    }
+}

@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    bitahoy.id: {{ .Release.Name }}-zmq
+  name: {{ .Release.Name }}-zmq
+spec:
+  ports:
+  - port: 9000
+  selector:
+    bitahoy.id: {{ .Release.Name }}-zmq
+status:
+  loadBalancer: {}

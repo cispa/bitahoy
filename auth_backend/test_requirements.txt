@@ -1,0 +1,6 @@
+requests
+asyncio
+pytest
+pytest-asyncio
+mockito
+psycopg2-binary
